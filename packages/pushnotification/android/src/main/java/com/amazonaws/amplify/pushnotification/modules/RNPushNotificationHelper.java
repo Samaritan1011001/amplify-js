@@ -17,6 +17,7 @@ import android.app.Application;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.NotificationChannel;
+import static android.os.Build.*;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -73,12 +74,24 @@ public class RNPushNotificationHelper {
 
     private PendingIntent toScheduleNotificationIntent(Bundle bundle) {
         int notificationID = Integer.parseInt(bundle.getString("id"));
-
+        int flags = PendingIntent.FLAG_UPDATE_CURRENT;
         Intent notificationIntent = new Intent(context, RNPushNotificationPublisher.class);
+        Class intentClass = getMainActivityClass();
+
+        if (VERSION.SDK_INT >= VERSION_CODES.M) {
+            flags |= PendingIntent.FLAG_IMMUTABLE;
+            notificationIntent = new Intent(context, intentClass);
+        }
         notificationIntent.putExtra(RNPushNotificationPublisher.NOTIFICATION_ID, notificationID);
         notificationIntent.putExtras(bundle);
 
-        return PendingIntent.getBroadcast(context, notificationID, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = null;
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+            pendingIntent = PendingIntent.getActivities(context, notificationID, new Intent[]{notificationIntent},
+            flags);
+        }
+        return pendingIntent;
     }
 
     public void sendNotificationScheduled(Bundle bundle) {
@@ -254,10 +267,7 @@ public class RNPushNotificationHelper {
 
             notification.setStyle(new NotificationCompat.BigTextStyle().bigText(bigText));
 
-            Intent intent = new Intent(context, RNPushNotificationBroadcastReceiver.class);
-            intent.putExtra("notification", bundle);
-
-            Log.i(LOG_TAG, "sendNotification: " + intent);
+            
 
             Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             if (!bundle.containsKey("playSound") || bundle.getBoolean("playSound")) {
@@ -313,10 +323,23 @@ public class RNPushNotificationHelper {
 
             int notificationID = Integer.parseInt(notificationIdString);
 
-            // PendingIntent pendingIntent = PendingIntent.getActivity(context, notificationID, intent,
-            //         PendingIntent.FLAG_UPDATE_CURRENT);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, notificationID, intent,
-                        PendingIntent.FLAG_UPDATE_CURRENT);
+            Intent intent = new Intent(context, RNPushNotificationBroadcastReceiver.class);
+            int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+
+            if (VERSION.SDK_INT >= VERSION_CODES.M) {
+                flags |= PendingIntent.FLAG_IMMUTABLE;
+                intent = new Intent(context, intentClass);
+            }
+            intent.putExtra("notification", bundle);
+            Log.i(LOG_TAG, "sendNotification: " + intent);
+
+            PendingIntent pendingIntent = null;
+            
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+                pendingIntent = PendingIntent.getActivities(context, notificationID, new Intent[]{intent},
+                flags);
+            }
+
 
             notification.setContentIntent(pendingIntent);
 
@@ -353,14 +376,18 @@ public class RNPushNotificationHelper {
                     // Add "action" for later identifying which button gets pressed.
                     bundle.putString("action", action);
                     actionIntent.putExtra("notification", bundle);
-                    PendingIntent pendingActionIntent = PendingIntent.getBroadcast(context, notificationID, actionIntent,
-                            PendingIntent.FLAG_UPDATE_CURRENT);
+                    
+                    PendingIntent pendingActionIntent = null;
+            
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+                        pendingActionIntent = PendingIntent.getActivities(context, notificationID, new Intent[]{actionIntent},
+                        flags);
+                    }
+                    
                     notification.addAction(icon, action, pendingActionIntent);
                 }
             }
 
-            // PendingIntent pendingIntent = PendingIntent.getBroadcast(context, notificationID, intent,
-            //         PendingIntent.FLAG_UPDATE_CURRENT);
 
 
             // Remove the notification from the shared preferences once it has been shown
