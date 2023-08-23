@@ -12,3 +12,13 @@ export function getRegion(userPoolId?: string): string {
 		});
 	return region;
 }
+
+export function getUserPoolName(userPoolId?: string) {
+	if (!userPoolId) {
+		throw new AuthError({
+			name: 'InvalidUserPoolId',
+			message: 'Invalid user pool id provided.',
+		});
+	}
+	return userPoolId.split('_')[1];
+}

@@ -5,6 +5,7 @@ import { AmplifyError, decodeJWT } from '@aws-amplify/core';
 import { tokenOrchestrator } from '.';
 
 import { AuthenticationResultType } from '../utils/clients/CognitoIdentityProvider/types';
+import { confirmDevice } from '../apis/confirmDevice';
 
 export async function cacheCognitoTokens(
 	AuthenticationResult: AuthenticationResultType
@@ -33,7 +34,7 @@ export async function cacheCognitoTokens(
 			idToken = decodeJWT(AuthenticationResult.IdToken);
 		}
 
-		tokenOrchestrator.setTokens({
+		await tokenOrchestrator.setTokens({
 			tokens: {
 				accessToken,
 				idToken,
@@ -42,6 +43,10 @@ export async function cacheCognitoTokens(
 				clockDrift,
 			},
 		});
+
+		if (AuthenticationResult.NewDeviceMetadata) {
+			confirmDevice(AuthenticationResult.NewDeviceMetadata);
+		}
 	} else {
 		// This would be a service error
 		throw new AmplifyError({
