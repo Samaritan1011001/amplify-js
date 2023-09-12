@@ -17,11 +17,8 @@ export type NotificationsSubCategory = Extract<
 export interface PushNotificationInterface {
 	configure: (config: PushNotificationConfig) => PushNotificationConfig;
 	getModuleName: () => NotificationsSubCategory;
-	getPluggable: (providerName: string) => PushNotificationProvider;
-	addPluggable: (pluggable: PushNotificationProvider) => void;
-	removePluggable: (providerName: string) => void;
 	enable: () => void;
-	identifyUser: (userId: string, userInfo: UserInfo) => Promise<void[]>;
+	identifyUser: (userId: string, userInfo: UserInfo) => Promise<void>;
 	getLaunchNotification: () => Promise<PushNotificationMessage>;
 	getBadgeCount: () => Promise<number>;
 	setBadgeCount: (count: number) => void;
