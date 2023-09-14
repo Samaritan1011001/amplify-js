@@ -1,6 +1,7 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
+import { UserInfo } from '../types';
 import PlatformNotSupportedError from './PlatformNotSupportedError';
 import {
 	NotificationsSubCategory,
@@ -14,7 +15,6 @@ import {
 	PushNotificationProvider,
 } from './types';
 
-// export default class PushNotification implements PushNotificationInterface {
 /**
  * Configure PushNotification
  * @param {Object} config - PushNotification configuration object
@@ -55,53 +55,55 @@ function getModuleName(): NotificationsSubCategory {
 // 	throw new PlatformNotSupportedError();
 // }
 
-function enable(): void {
+export function enable(): void {
 	throw new PlatformNotSupportedError();
 }
 
-function identifyUser(): Promise<void[]> {
+export function identifyUser(
+	userId: string,
+	userInfo: UserInfo
+): Promise<void[]> {
 	throw new PlatformNotSupportedError();
 }
 
-async function getLaunchNotification(): Promise<PushNotificationMessage> {
+export async function getLaunchNotification(): Promise<PushNotificationMessage> {
 	throw new PlatformNotSupportedError();
 }
 
-async function getBadgeCount(): Promise<number | null> {
+export async function getBadgeCount(): Promise<number | null> {
 	throw new PlatformNotSupportedError();
 }
 
-function setBadgeCount(_: number): void {
+export function setBadgeCount(_: number): void {
 	throw new PlatformNotSupportedError();
 }
 
-async function getPermissionStatus(): Promise<PushNotificationPermissionStatus> {
+export async function getPermissionStatus(): Promise<PushNotificationPermissionStatus> {
 	throw new PlatformNotSupportedError();
 }
 
-async function requestPermissions(
+export async function requestPermissions(
 	_?: PushNotificationPermissions
 ): Promise<boolean> {
 	throw new PlatformNotSupportedError();
 }
 
-function onNotificationReceivedInBackground(
+export function onNotificationReceivedInBackground(
 	_: OnPushNotificationMessageHandler
 ): any {
 	throw new PlatformNotSupportedError();
 }
 
-function onNotificationReceivedInForeground(
+export function onNotificationReceivedInForeground(
 	_: OnPushNotificationMessageHandler
 ): any {
 	throw new PlatformNotSupportedError();
 }
 
-function onTokenReceived(_: OnTokenReceivedHandler): any {
+export function onTokenReceived(_: OnTokenReceivedHandler): any {
 	throw new PlatformNotSupportedError();
 }
 
-function onNotificationOpened(_: OnPushNotificationMessageHandler): any {
+export function onNotificationOpened(_: OnPushNotificationMessageHandler): any {
 	throw new PlatformNotSupportedError();
 }
-// }

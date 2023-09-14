@@ -22,6 +22,11 @@
 			"import": "./lib-esm/auth/index.js",
 			"require": "./lib/auth/index.js"
 		},
+		"./pushNotifications": {
+			"types": "./lib-esm/pushNotifications/index.d.ts",
+			"import": "./lib-esm/pushNotifications/index.js",
+			"require": "./lib/pushNotifications/index.js"
+		},
 		"./auth/cognito": {
 			"types": "./lib-esm/auth/cognito/index.d.ts",
 			"import": "./lib-esm/auth/cognito/index.js",
@@ -76,6 +81,9 @@
 			],
 			"utils": [
 				"./lib-esm/utils/index.d.ts"
+			],
+			"pushNotifications": [
+				"./lib-esm/pushNotifications/index.d.ts"
 			],
 			"auth": [
 				"./lib-esm/auth/index.d.ts"
@@ -138,6 +146,7 @@
 		"@aws-amplify/auth": "6.0.0",
 		"@aws-amplify/core": "6.0.0",
 		"@aws-amplify/storage": "6.0.0",
+		"@aws-amplify/notifications": "1.6.4",
 		"tslib": "^2.5.0"
 	},
 	"devDependencies": {

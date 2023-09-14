@@ -1,7 +1,7 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-export { default as Notifications } from './Notifications';
+// export { default as Notifications } from './Notifications';
 
 export { AWSPinpointProviderCommon } from './common';
 export { AWSPinpointUserInfo } from './common/AWSPinpointProviderCommon/types';
@@ -24,3 +24,16 @@ export {
 	PushNotificationPermissionStatus,
 } from './PushNotification/types';
 export { NotificationsConfig, UserInfo } from './types';
+export {
+	enable,
+	identifyUser,
+	requestPermissions,
+	getPermissionStatus,
+	getLaunchNotification,
+	onNotificationOpened,
+	onNotificationReceivedInBackground,
+	onNotificationReceivedInForeground,
+	onTokenReceived,
+	getBadgeCount,
+	setBadgeCount,
+} from './PushNotification';

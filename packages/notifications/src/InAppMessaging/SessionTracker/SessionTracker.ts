@@ -1,6 +1,9 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
-import { browserOrNode, ConsoleLogger as Logger } from '@aws-amplify/core';
+import {
+	browserOrNode,
+	ConsoleLogger as Logger,
+} from '@aws-amplify/core/internals/utils';
 import noop from 'lodash/noop';
 import {
 	SessionState,

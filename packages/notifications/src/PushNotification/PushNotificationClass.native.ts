@@ -89,58 +89,6 @@ class PushNotification implements PushNotificationInterface {
 		return 'PushNotification';
 	}
 
-	// /**
-	//  * Get a plugin from added plugins
-	//  * @param {string} providerName - the name of the plugin to get
-	//  */
-	// getPluggable = (providerName: string): PushNotificationProvider => {
-	// 	const pluggable =
-	// 		this.pluggables.find(
-	// 			pluggable => pluggable.getProviderName() === providerName
-	// 		) ?? null;
-
-	// 	if (!pluggable) {
-	// 		// logger.debug(`No plugin found with name ${providerName}`);
-	// 	}
-
-	// 	return pluggable;
-	// };
-
-	// /**
-	//  * Add plugin into PushNotification
-	//  * @param {PushNotificationProvider} pluggable - an instance of the plugin
-	//  */
-	// addPluggable = (pluggable: PushNotificationProvider): void => {
-	// 	if (
-	// 		pluggable &&
-	// 		pluggable.getCategory() === 'Notifications' &&
-	// 		pluggable.getSubCategory() === 'PushNotification'
-	// 	) {
-	// 		if (this.getPluggable(pluggable.getProviderName())) {
-	// 			throw new Error(
-	// 				`Pluggable ${pluggable.getProviderName()} has already been added.`
-	// 			);
-	// 		}
-	// 		this.pluggables.push(pluggable);
-	// 		pluggable.configure(this.config[pluggable.getProviderName()]);
-	// 	}
-	// };
-
-	// /**
-	//  * Remove a plugin from added plugins
-	//  * @param {string} providerName - the name of the plugin to remove
-	//  */
-	// removePluggable = (providerName: string): void => {
-	// 	const index = this.pluggables.findIndex(
-	// 		pluggable => pluggable.getProviderName() === providerName
-	// 	);
-	// 	if (index === -1) {
-	// 		// logger.debug(`No plugin found with name ${providerName}`);
-	// 	} else {
-	// 		this.pluggables.splice(index, 1);
-	// 	}
-	// };
-
 	enable = (): void => {
 		if (this.isEnabled) {
 			// logger.info('Notification listeners have already been enabled');
@@ -251,6 +199,7 @@ class PushNotification implements PushNotificationInterface {
 			// broadcast to library listeners
 			TOKEN_RECEIVED,
 			({ token }) => {
+				console.log('Token: ', token);
 				// avoid a race condition where two endpoints are created with the same token on a fresh install
 				if (this.token === token) {
 					return;

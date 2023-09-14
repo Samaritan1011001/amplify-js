@@ -43,6 +43,7 @@
 			"packages/core",
 			"packages/auth",
 			"packages/analytics",
+			"packages/notifications",
 			"packages/storage",
 			"packages/aws-amplify",
 			"packages/adapter-nextjs"

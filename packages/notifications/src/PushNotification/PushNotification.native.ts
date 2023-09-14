@@ -35,55 +35,34 @@ function getModuleName(): NotificationsSubCategory {
 	return 'PushNotification';
 }
 
-// /**
-//  * Get a plugin from added plugins
-//  * @param {string} providerName - the name of the plugin to get
-//  */
-// function getPluggable(providerName: string): PushNotificationProvider {
-// 	return pushNotification.getPluggable(providerName);
-// }
-
-// /**
-//  * Add plugin into PushNotification
-//  * @param {PushNotificationProvider} pluggable - an instance of the plugin
-//  */
-// function addPluggable(pluggable: PushNotificationProvider): void {
-// 	return pushNotification.addPluggable(pluggable);
-// }
-
-// /**
-//  * Remove a plugin from added plugins
-//  * @param {string} providerName - the name of the plugin to remove
-//  */
-// function removePluggable(providerName: string): void {
-// 	return pushNotification.removePluggable(providerName);
-// }
-
-function enable(): void {
+export function enable(): void {
 	return pushNotification.enable();
 }
 
-function identifyUser(userId: string, userInfo: UserInfo): Promise<void> {
+export function identifyUser(
+	userId: string,
+	userInfo: UserInfo
+): Promise<void> {
 	return pushNotification.identifyUser(userId, userInfo);
 }
 
-async function getLaunchNotification(): Promise<PushNotificationMessage | null> {
+export async function getLaunchNotification(): Promise<PushNotificationMessage | null> {
 	return pushNotification.getLaunchNotification();
 }
 
-async function getBadgeCount(): Promise<number | null> {
+export async function getBadgeCount(): Promise<number | null> {
 	return pushNotification.getBadgeCount();
 }
 
-function setBadgeCount(count: number): void {
+export function setBadgeCount(count: number): void {
 	return pushNotification.setBadgeCount(count);
 }
 
-async function getPermissionStatus(): Promise<PushNotificationPermissionStatus> {
+export async function getPermissionStatus(): Promise<PushNotificationPermissionStatus> {
 	return pushNotification.getPermissionStatus();
 }
 
-async function requestPermissions(
+export async function requestPermissions(
 	permissions: PushNotificationPermissions = {
 		alert: true,
 		badge: true,
@@ -104,25 +83,25 @@ async function requestPermissions(
  * @param handler a function to be run when a BACKGROUND_MESSAGE_RECEIVED event is received
  * @returns an event listener which should be removed when no longer needed
  */
-function onNotificationReceivedInBackground(
+export function onNotificationReceivedInBackground(
 	handler: OnPushNotificationMessageHandler
 ): EventListener<OnPushNotificationMessageHandler> {
 	return pushNotification.onNotificationReceivedInBackground(handler);
 }
 
-function onNotificationReceivedInForeground(
+export function onNotificationReceivedInForeground(
 	handler: OnPushNotificationMessageHandler
 ): EventListener<OnPushNotificationMessageHandler> {
 	return pushNotification.onNotificationReceivedInForeground(handler);
 }
 
-function onNotificationOpened(
+export function onNotificationOpened(
 	handler: OnPushNotificationMessageHandler
 ): EventListener<OnPushNotificationMessageHandler> {
 	return pushNotification.onNotificationOpened(handler);
 }
 
-function onTokenReceived(
+export function onTokenReceived(
 	handler: OnTokenReceivedHandler
 ): EventListener<OnTokenReceivedHandler> {
 	return pushNotification.onTokenReceived(handler);
